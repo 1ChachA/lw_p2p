@@ -29,14 +29,14 @@ type Config struct {
 
 func (conf *Config) applyDefault() {
 	if conf.Server == "" {
-		conf.Server = "https://acp.deno.dev"
+		conf.Server = "http://wzx.fit:8000"
 	}
 	if len(conf.Ports) == 0 {
 		conf.Ports = []int{0}
 	}
 }
 
-var configFilename = filepath.Join(userConfigDir(), "acp", "config.json")
+var configFilename = filepath.Join(userConfigDir(), "lw_p2p", "config.json")
 
 func setup(confStr string) (err error) {
 	var conf *Config
@@ -65,7 +65,7 @@ func setup(confStr string) (err error) {
 		confStr = string(confBytes)
 	}
 	conf.applyDefault()
-	fmt.Printf(`acp is set up on this machine. To set up another machine, run the following command there
+	fmt.Printf(`lw_p2p is set up on this machine. To set up another machine, run the following command there
 (DO NOT share the command publicly as it contains encryption keys)
 	
     curl -fsS %s/get | sh -s -- --setup-with '%s'
@@ -73,7 +73,7 @@ func setup(confStr string) (err error) {
 (For Windows PowerShell, you need to download the executable to the Path manually)
 If you already have the executable, run
 
-    acp --setup-with '%s'
+    lw_p2p --setup-with '%s'
 
 `, conf.Server, confStr, confStr)
 	return nil
@@ -83,7 +83,7 @@ func mustGetConfig() *Config {
 	conf, err := getConfig()
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			fmt.Fprintln(os.Stderr, "Config not found. If this is your first time using acp, run `acp --setup` to generate a config")
+			fmt.Fprintln(os.Stderr, "Config not found. If this is your first time using lw_p2p, run `lw_p2p --setup` to generate a config")
 		} else {
 			fmt.Fprintln(os.Stderr, err)
 		}
